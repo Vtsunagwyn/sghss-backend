@@ -1,0 +1,101 @@
+openapi: 3.0.0
+info:
+  title: SGHSS – Sistema de Gestão Hospitalar
+  version: 1.0.0
+  description: Documentação dos endpoints da API do Sistema de Gestão Hospitalar e de Serviços de Saúde.
+
+paths:
+  /pacientes:
+    post:
+      summary: Cadastrar paciente
+      tags:
+        - Pacientes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                cpf:
+                  type: string
+                data_nascimento:
+                  type: string
+                telefone:
+                  type: string
+                email:
+                  type: string
+      responses:
+        '201':
+          description: Paciente cadastrado com sucesso
+        '400':
+          description: Erro de validação
+
+    get:
+      summary: Listar pacientes
+      tags:
+        - Pacientes
+      responses:
+        '200':
+          description: Lista de pacientes
+
+  /pacientes/{id}:
+    get:
+      summary: Obter paciente por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Dados do paciente
+        '404':
+          description: Paciente não encontrado
+
+    put:
+      summary: Atualizar paciente
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Paciente atualizado
+        '404':
+          description: Paciente não encontrado
+
+    delete:
+      summary: Remover paciente
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Paciente removido
+        '404':
+          description: Paciente não encontrado
+
+  /auth/login:
+    post:
+      summary: Login de usuário
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        '200':
+          description: Token JWT retornado
+        '401':
+          description: Credenciais inválidas
